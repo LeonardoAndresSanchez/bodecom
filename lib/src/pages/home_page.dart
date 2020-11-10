@@ -1,4 +1,6 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:bodecom/src/animations/animations.dart';
+import 'package:bodecom/src/pages/menuModulo1.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -199,8 +201,24 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         switch (item) {
           case 'Comercializacion':
-            Navigator.pushNamed(context, 'menuModulo1');
+            // Navigator.pushNamed(context, 'menuModulo1');
             // Navigator.pushNamed(context, 'modulo1');
+            Navigator.of(context).push(PageRouteBuilder(
+                pageBuilder: (context, animation, anotherAnimation) {
+                  return MenuModulo1();
+                },
+                transitionDuration: Duration(milliseconds: 1200),
+                transitionsBuilder:
+                    (context, animation, anotherAnimation, child) {
+                  animation = CurvedAnimation(
+                      curve: Curves.decelerate, parent: animation);
+                  return SlideTransition(
+                    position:
+                        Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
+                            .animate(animation),
+                    child: child,
+                  );
+                }));
             break;
           default:
         }

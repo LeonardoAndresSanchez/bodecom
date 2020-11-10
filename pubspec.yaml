@@ -28,9 +28,7 @@ dependencies:
   fab_circular_menu: ^1.0.0
   animated_splash_screen: ^1.0.1+2
   page_transition: ^1.1.7+2
-  animated_splash: ^1.0.0
-  flare_splash_screen: ^3.0.1
-  splash_screen_view: ^1.0.1
+  animate_do: ^1.7.3
 
 dev_dependencies:
   flutter_test:

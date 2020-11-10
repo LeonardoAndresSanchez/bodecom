@@ -62,43 +62,40 @@ class _Modulo1PageState extends State<Modulo1Page> {
         children: [
           Container(
               height: size.height * 0.25,
-              decoration: BoxDecoration(
-                // color: HexColor('#2E78EF'),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                              HexColor('#1E264A').withOpacity(0.7),
-                              BlendMode.dstOut),
-                          image: AssetImage('assets/pruebaBaneer.jpg')),
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: LinearGradient(
-                          begin: Alignment.centerRight,
-                          end: Alignment.centerLeft,
-                          colors: <Color>[
-                            // HexColor('#1E264A'),
-                            // HexColor('#2E78EF'),
-                            HexColor('#8840FF'),
-                            HexColor('#329BFF'),
-                            // Colors.transparent,
-                          ]),
-                    ),
-                    child: Center(
-                      child: Text('Matriz de Comercializacion',
-                          style: TextStyle(
-                              letterSpacing: 1.7,
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600)),
-                    )),
-              )),
+              // decoration: BoxDecoration(
+              //   color: HexColor('#2E78EF'),
+              //   borderRadius: BorderRadius.only(
+              //       bottomLeft: Radius.circular(10),
+              //       bottomRight: Radius.circular(10)),
+              // ),
+              child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                            HexColor('#1E264A').withOpacity(0.7),
+                            BlendMode.dstOut),
+                        image: AssetImage('assets/pruebaBaneer.jpg')),
+                    // borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.centerLeft,
+                        colors: <Color>[
+                          // HexColor('#1E264A'),
+                          // HexColor('#2E78EF'),
+                          HexColor('#8840FF'),
+                          HexColor('#329BFF'),
+                          // Colors.transparent,
+                        ]),
+                  ),
+                  child: Center(
+                    child: Text('Matriz de Comercializacion',
+                        style: TextStyle(
+                            letterSpacing: 1.7,
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600)),
+                  ))),
 
           // _crearBtnSlider(),
 
