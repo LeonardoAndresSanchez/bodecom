@@ -6,6 +6,7 @@ import 'package:bodecom/src/pages/modulo1.dart';
 import 'package:bodecom/src/pages/home_page.dart';
 import 'package:bodecom/src/pages/login_page.dart';
 import 'package:bodecom/src/pages/producto_page.dart';
+import 'package:bodecom/src/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
 
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        initialRoute: 'login',
+        initialRoute: 'splash',
         routes: {
+          'splash': (context) => SplashScreen(),
           'login': (context) => LoginPage(),
           'home': (context) => HomePage(),
           'producto': (context) => ProductoPage(),

@@ -56,143 +56,129 @@ class _HomePageState extends State<HomePage> {
             elevation: 2,
             backgroundColor: HexColor('#1E264A'),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                  onTap: () {
+              IconButton(
+                  icon: Image.asset(
+                    'assets/iconoProyectos.png',
+                    height: 100,
+                  ),
+                  onPressed: () {
                     _mostarAlertCustom();
                     print('click proyecto');
-                  },
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(5),
+                  }),
+            ],
+          ),
+          drawer: Padding(
+            padding: const EdgeInsets.only(top: 40, bottom: 40),
+            child: Container(
+              width: size.width * 0.70,
+              decoration: BoxDecoration(
+                // color: HexColor('#1E264A'),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      HexColor('#445CFF'),
+                      HexColor('#313D9C'),
+                      // HexColor('#222550'),
+                      HexColor('#1E264A'),
+                    ]),
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                    topRight: Radius.circular(15)),
+              ),
+              child: Stack(
+                children: [
+                  ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      DrawerHeader(
+                        // padding: EdgeInsets.all(10),
+
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.white38,
-                                blurRadius: 1.0,
-                                offset: Offset(0.5, 0.0),
-                                spreadRadius: 0.5,
-                              )
-                            ]),
-                        child: Text(
-                          'Proyecto',
-                          style: TextStyle(
-                              color: HexColor('#1E264A'), fontSize: 15),
+                          borderRadius:
+                              BorderRadius.only(topRight: Radius.circular(15)),
+                          color: Colors.white,
                         ),
+                        child: Container(
+                          height: size.height * 0.15,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Image.asset(
+                                    'assets/logoBodecom.png',
+                                    width: 200,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        // leading: Image.asset('assets/icon_perfil1.png', width: 30.0),
+                        title: Text(
+                          'Actividades de Juego',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        // onTap: () => Navigator.of(context).pushNamed('inicio'),
+                        // onTap: () => _juegoAleatorio(),
+                      ),
+                      ListTile(
+                        // leading: Image.asset('assets/icon_perfil2.png', width: 30.0),
+                        title: Text(
+                          'Catálogo de Premios',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        // onTap: () => Navigator.of(context).pushNamed('catalogo'),
+                      ),
+                      ListTile(
+                        // leading: Image.asset('assets/icon_perfil4.png', width: 30.0),
+                        title: Text(
+                          'Registra tu factura',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        // onTap: () => Navigator.of(context).pushNamed('factura'),
+                      ),
+                      ListTile(
+                        // leading: Image.asset('assets/icon_perfil6.png', width: 30.0),
+                        title: Text(
+                          'Mensajes',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        // onTap: () => _mostarAlertCustom(),
+                        // onTap: () => Navigator.of(context).pushNamed('preguntas2'),
                       ),
                     ],
                   ),
-                ),
-              )
-            ],
-          ),
-          drawer: Container(
-            width: size.width * 0.6,
-            decoration: BoxDecoration(
-              color: HexColor('#1E264A'),
-              // gradient: LinearGradient(
-              //     begin: Alignment.topLeft,
-              //     end: Alignment.bottomRight,
-              //     colors: <Color>[
-              //       HexColor('#1E264A'),
-              //       HexColor('#2E78EF'),
-              //     ]),
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(15),
-                  topRight: Radius.circular(15)),
-            ),
-            child: Stack(
-              children: [
-                ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-                    DrawerHeader(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          // color: HexColor('#1E264A'),
-                          ),
-                      child: Container(
-                        height: size.height * 0.15,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Image.asset(
-                                  'assets/user.png',
-                                  width: 100,
-                                ),
-                              ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            // leading:
+                            // Image.asset('assets/terminos.png', width: 30.0),
+                            title: Text(
+                              'Cerrar sesión',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      // leading: Image.asset('assets/icon_perfil1.png', width: 30.0),
-                      title: Text(
-                        'Actividades de Juego',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      // onTap: () => Navigator.of(context).pushNamed('inicio'),
-                      // onTap: () => _juegoAleatorio(),
-                    ),
-                    ListTile(
-                      // leading: Image.asset('assets/icon_perfil2.png', width: 30.0),
-                      title: Text(
-                        'Catálogo de Premios',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      // onTap: () => Navigator.of(context).pushNamed('catalogo'),
-                    ),
-                    ListTile(
-                      // leading: Image.asset('assets/icon_perfil4.png', width: 30.0),
-                      title: Text(
-                        'Registra tu factura',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      // onTap: () => Navigator.of(context).pushNamed('factura'),
-                    ),
-                    ListTile(
-                      // leading: Image.asset('assets/icon_perfil6.png', width: 30.0),
-                      title: Text(
-                        'Mensajes',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      // onTap: () => _mostarAlertCustom(),
-                      // onTap: () => Navigator.of(context).pushNamed('preguntas2'),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          // leading:
-                          // Image.asset('assets/terminos.png', width: 30.0),
-                          title: Text(
-                            'Cerrar sesión',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
+                            // onTap: () =>
+                            // Navigator.of(context).pushNamed('terminos'),
+                            // onTap: () => Navigator.of(context).pushNamed('inicioPage'),
                           ),
-                          // onTap: () =>
-                          // Navigator.of(context).pushNamed('terminos'),
-                          // onTap: () => Navigator.of(context).pushNamed('inicioPage'),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           body: ListView(
@@ -259,49 +245,57 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),
                               bottomRight: Radius.circular(50))),
-                      child: Icon(
-                        Icons.architecture,
-                        size: 35,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          'assets/icons/iconoTarjetas.png',
+                          height: 70,
+                        ),
+
+                        // size: 35,
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Matriz de' + '\n' + item,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 1.2),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Matriz de' + '\n' + item,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 15.0),
-                              child: Icon(
-                                Icons.play_arrow,
-                                color: HexColor('#2CBEFF'),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 15.0),
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color: HexColor('#2CBEFF'),
+                                ),
                               ),
-                            ),
-                            Text(
-                              'No. Documentos',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.white,
-                                letterSpacing: 0.4,
-                                fontWeight: FontWeight.w400,
+                              Text(
+                                'No. Documentos',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.white,
+                                  letterSpacing: 0.4,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
