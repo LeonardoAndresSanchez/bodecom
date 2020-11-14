@@ -9,6 +9,7 @@ import 'package:bodecom/src/pages/producto_page.dart';
 import 'package:bodecom/src/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,18 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', 'US'), // English
+          const Locale('es', 'ES'), // Español
+          const Locale.fromSubtags(
+              languageCode: 'zh'), // Chinese *See Advanced Locales below*
+          // ... other locales the app supports
+        ],
         initialRoute: 'splash',
         routes: {
           'splash': (context) => SplashScreen(),

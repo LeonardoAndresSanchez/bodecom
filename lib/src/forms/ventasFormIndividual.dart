@@ -64,261 +64,323 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+        backgroundColor: Colors.grey[300],
         appBar: AppBar(
           centerTitle: true,
-          title: Text('individual'),
+          title: Text('Vantas Individual'),
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              child: Stack(
+            child: Column(
+          children: [
+            _crearModuloUbicacion(),
+            _crearModulotipoVenta(),
+            _crearModuloDetalleVenta()
+          ],
+        )));
+  }
+
+  _crearModuloUbicacion() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                top: 100,
+                bottom: 16,
+                // right: 16,
+                // left: 16,
+              ),
+              margin: EdgeInsets.only(
+                top: 35,
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10.0,
+                      offset: Offset(0.0, 10.0),
+                    )
+                  ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: 100,
-                        bottom: 16,
-                        right: 16,
-                        left: 16,
-                      ),
-                      margin: EdgeInsets.only(
-                        top: 35,
-                      ),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10.0,
-                              offset: Offset(0.0, 10.0),
-                            )
-                          ]),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'PROYECTOS',
-                            // style: kTextStyle1,
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // SizedBox(
+                        //   height: 30.0,
+                        // ),
+                        Text(
+                          'Ubicación',
+                          style: TextStyle(
+                            color: HexColor('#1E264A'),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
                           ),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: 30.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_outlined,
-                                      color: HexColor('#3C345F'),
-                                    ),
-                                    Text(
-                                      'Fecha y Grupo Étnico',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                _crearFecha(context),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                _crearGrupoEtnico(),
-                                Divider(
-                                  height: 30.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_outlined,
-                                      color: HexColor('#3C345F'),
-                                    ),
-                                    Text(
-                                      'Ubicación',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                _crearDepartamento(),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                _crearMunicipio(),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                _crearVereda(),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_outlined,
-                                      color: HexColor('#3C345F'),
-                                    ),
-                                    Text(
-                                      'Proyecto y Línea Productiva',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  'Rubro (Línea productiva)',
-                                  textAlign: TextAlign.left,
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                _crearProyecto(),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_outlined,
-                                      color: HexColor('#3C345F'),
-                                    ),
-                                    Text(
-                                      'Observaciones',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                _crearObservaciones(),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_outlined,
-                                      color: HexColor('#3C345F'),
-                                    ),
-                                    Text(
-                                      ' Detalles de la venta',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                _crearDetalleVenta(),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_outlined,
-                                      color: HexColor('#3C345F'),
-                                    ),
-                                    Text(
-                                      ' Detalles de la venta',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                _crearDetalleProducto(),
-                              ]),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: FlatButton(
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                      color: HexColor('#1E264A'),
-                                    ),
-                                  ),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  color: HexColor('#E5E5E5'),
-                                  shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(10.0)),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: FlatButton(
-                                  child: Text(
-                                    'Ok',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  color: HexColor('#1E264A'),
-                                  shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(10.0)),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    left: 16,
-                    right: 16,
-                    child: CircleAvatar(
-                      child: Image.asset(
-                        'assets/favicon.png',
-                        height: 80,
-                      ),
-                      backgroundColor: HexColor('#1E264A'),
-                      radius: 50,
-                    ),
-                  ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        _crearDepartamento(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        _crearMunicipio(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        _crearVereda(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        _crearFecha(context),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                      ]),
                 ],
               ),
             ),
-          ),
-        ));
+            Positioned(
+              top: 0,
+              left: 16,
+              right: 16,
+              child: CircleAvatar(
+                child: Image.asset(
+                  'assets/favicon.png',
+                  height: 80,
+                ),
+                backgroundColor: HexColor('#1E264A'),
+                radius: 50,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _crearModulotipoVenta() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                // top: 30,
+                bottom: 16,
+                // right: 16,
+                // left: 16,
+              ),
+              margin: EdgeInsets.only(
+                top: 10,
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10.0,
+                      offset: Offset(0.0, 10.0),
+                    )
+                  ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12)),
+                            color: HexColor('#1E264A'),
+                          ),
+                          height: 50,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.play_arrow_outlined,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Rubro y Línea Productiva',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        _crearRubroProductivo(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        _crearLineaProductiva(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                      ]),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _crearModuloDetalleVenta() {
+    return Padding(
+      padding:
+          const EdgeInsets.only(top: 8.0, bottom: 25, left: 8.0, right: 8.0),
+      child: Container(
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                // top: 30,
+                bottom: 16,
+                // right: 16,
+                // left: 16,
+              ),
+              margin: EdgeInsets.only(
+                top: 10,
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10.0,
+                      offset: Offset(0.0, 10.0),
+                    )
+                  ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12)),
+                            color: HexColor('#1E264A'),
+                          ),
+                          height: 50,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.play_arrow_outlined,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Detalles de venta',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _crearDetalleVenta(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Text(
+                          'Detalles Producto',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        _crearDetalleProducto(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: FlatButton(
+                                child: Text(
+                                  'Cancelar',
+                                  style: TextStyle(
+                                    color: HexColor('#1E264A'),
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                onPressed: () => Navigator.of(context).pop(),
+                                color: HexColor('#E5E5E5'),
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0)),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: FlatButton(
+                                child: Text(
+                                  'Ok',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                onPressed: () => Navigator.of(context).pop(),
+                                color: HexColor('#1E264A'),
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0)),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                      ]),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _crearFecha(BuildContext context) {
@@ -328,17 +390,13 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
         enableInteractiveSelection: false,
         controller: _inputFieldDateController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-          hintText: 'DD-MM-AAAA',
-          labelText: 'DD-MM-AAAA',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          hintText: 'DD - MM - AAAA',
+          labelText: 'DD - MM - AAAA',
           suffixIcon: Icon(
             Icons.calendar_today,
             color: HexColor('#3C345F'),
           ),
-          // icon: Icon(
-          //   Icons.calendar_today,
-          //   color: Colors.green[300],
-          // ),
         ),
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
@@ -353,8 +411,15 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
       context: context,
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2018),
-      lastDate: new DateTime(2025),
+      lastDate: new DateTime(2050),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark(), // This will change to light theme.
+          child: child,
+        );
+      },
     );
+
     if (picked != null) {
       setState(() {
         _fecha = formatDate(picked, [yyyy, '-', mm, '-', dd, '-', hh, '-', nn]);
@@ -364,57 +429,16 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
     }
   }
 
-  _crearGrupoEtnico() {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[500]),
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 20.0),
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      child: SearchableDropdown.single(
-        items: items,
-        value: selectedValue,
-        hint: "Grupo Étnico",
-        searchHint: "Grupo Étnico",
-        onChanged: (value) {
-          setState(() {
-            selectedValue = value;
-          });
-        },
-        doneButton: "Done",
-        displayItem: (item, selected) {
-          return (Row(children: [
-            selected
-                ? Icon(
-                    Icons.radio_button_checked,
-                    color: HexColor('#3C345F'),
-                  )
-                : Icon(
-                    Icons.radio_button_unchecked,
-                    color: HexColor('#291E43'),
-                  ),
-            SizedBox(width: 7),
-            Expanded(
-              child: item,
-            ),
-          ]));
-        },
-        isExpanded: true,
-      ),
-    );
-  }
-
   _crearDepartamento() {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[500]),
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           margin: EdgeInsets.symmetric(horizontal: 20.0),
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: SearchableDropdown.single(
             items: items,
             value: selectedValue,
@@ -439,10 +463,10 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[500]),
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           margin: EdgeInsets.symmetric(horizontal: 20.0),
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: SearchableDropdown.single(
             items: items,
             value: selectedValue,
@@ -466,10 +490,10 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[500]),
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           margin: EdgeInsets.symmetric(horizontal: 20.0),
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: SearchableDropdown.single(
             items: items,
             value: selectedValue,
@@ -487,21 +511,48 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
     );
   }
 
-  _crearProyecto() {
+  _crearRubroProductivo() {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[500]),
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           margin: EdgeInsets.symmetric(horizontal: 20.0),
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: SearchableDropdown.single(
             items: items,
             value: selectedValue,
-            hint: "Seleccione Proyecto",
-            searchHint: "Seleccione Proyecto",
+            hint: "Rubro Productivo",
+            searchHint: "Rubro Productivo",
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+              });
+            },
+            isExpanded: true,
+          ),
+        );
+      },
+    );
+  }
+
+  _crearLineaProductiva() {
+    return StreamBuilder(
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[500]),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          margin: EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+          child: SearchableDropdown.single(
+            items: items,
+            value: selectedValue,
+            hint: "Linea productiva",
+            searchHint: "Linea productiva",
             onChanged: (value) {
               setState(() {
                 selectedValue = value;
@@ -555,11 +606,26 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
     return Container(
       child: Column(
         children: [
-          Text('Tipo de Apoyo'),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Tipo de Apoyo',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           RadioListTile(
             value: 1,
             groupValue: selectedRadio2,
-            title: Text('Directo'),
+            title: Text(
+              'Directo',
+              style: TextStyle(
+                fontSize: 16.0,
+                // fontWeight: FontWeight.w700,
+              ),
+            ),
             // subtitle: Text(user.lastName),
             onChanged: (val) {
               print("Radio $val");
@@ -571,7 +637,13 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
           RadioListTile(
             value: 2,
             groupValue: selectedRadio2,
-            title: Text('Indirecto'),
+            title: Text(
+              'Indirecto',
+              style: TextStyle(
+                fontSize: 16.0,
+                // fontWeight: FontWeight.w700,
+              ),
+            ),
             // subtitle: Text(user.lastName),
             onChanged: (val) {
               print("Radio $val");
@@ -583,7 +655,13 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
           RadioListTile(
             value: 3,
             groupValue: selectedRadio2,
-            title: Text('Particular'),
+            title: Text(
+              'Particular',
+              style: TextStyle(
+                fontSize: 16.0,
+                // fontWeight: FontWeight.w700,
+              ),
+            ),
             // subtitle: Text(user.lastName),
             onChanged: (val) {
               print("Radio $val");
@@ -592,7 +670,13 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
             // selected: selectedUser == user,
             activeColor: Colors.green,
           ),
-          Text('Venta con acuerdo'),
+          Text(
+            'Venta con acuerdo',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -607,7 +691,13 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
                       setSelectedRadio(val);
                     },
                   ),
-                  Text('No')
+                  Text(
+                    'No',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      // fontWeight: FontWeight.w700,
+                    ),
+                  )
                 ],
               ),
               Row(
@@ -621,38 +711,17 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
                       setSelectedRadio(val);
                     },
                   ),
-                  Text('Si')
+                  Text(
+                    'Si',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      // fontWeight: FontWeight.w700,
+                    ),
+                  )
                 ],
               ),
             ],
           ),
-          StreamBuilder(
-              // stream: bloc.emailStream,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextField(
-                // expands: true,
-                maxLines: 10,
-                minLines: 1,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  errorText: snapshot.error,
-                  // icon: Icon(
-                  //   Icons.alternate_email,
-                  //   color: HexColor('#2E78EF'),
-                  // ),
-                  hintText: 'Lugar de entrega',
-                  labelText: 'Lugar de entrega',
-                  counterText: snapshot.data,
-                ),
-                // onChanged: bloc.changeEmail,
-              ),
-            );
-          }),
         ],
       ),
     );
@@ -667,10 +736,10 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
               return Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey[500]),
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 child: SearchableDropdown.single(
                   items: items,
                   value: selectedValue,
@@ -693,10 +762,10 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey[500]),
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(10.0),
             ),
             margin: EdgeInsets.symmetric(horizontal: 20.0),
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: SearchableDropdown.single(
               items: items,
               value: selectedValue,
@@ -731,16 +800,55 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
           SizedBox(
             height: 10,
           ),
-          Text('Unidad de venta'),
+          StreamBuilder(
+              // stream: bloc.emailStream,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextField(
+                // expands: true,
+                maxLines: 10,
+                minLines: 1,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  errorText: snapshot.error,
+                  // icon: Icon(
+                  //   Icons.alternate_email,
+                  //   color: HexColor('#2E78EF'),
+                  // ),
+                  hintText: 'Lugar de entrega',
+                  labelText: 'Lugar de entrega',
+                  counterText: snapshot.data,
+                ),
+                // onChanged: bloc.changeEmail,
+              ),
+            );
+          }),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Unidad de venta',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
           StreamBuilder(
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               return Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey[500]),
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 child: SearchableDropdown.single(
                   items: items,
                   value: selectedValue,

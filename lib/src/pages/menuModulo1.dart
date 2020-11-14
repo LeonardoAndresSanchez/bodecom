@@ -48,18 +48,26 @@ class _MenuModulo1State extends State<MenuModulo1> {
             children: <Widget>[
               IconButton(
                   color: Colors.white,
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.hail),
                   onPressed: () {
                     Navigator.pushNamed(context, 'ventas');
                     print('Home');
                   }),
               IconButton(
                   color: Colors.white,
-                  icon: Icon(Icons.favorite),
+                  icon: Icon(Icons.group_rounded),
                   onPressed: () {
                     Navigator.pushNamed(context, 'ventasIndividual');
 
                     print('Favorite');
+                  }),
+              IconButton(
+                  color: Colors.white,
+                  icon: Icon(Icons.business_center_outlined),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'ventasIndividual');
+
+                    print('asociativa');
                   })
             ]),
       ),
