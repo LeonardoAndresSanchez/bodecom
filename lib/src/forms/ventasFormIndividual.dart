@@ -67,7 +67,7 @@ class _VentasFormIndividualState extends State<VentasFormIndividual> {
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Vantas Individual'),
+          title: Text('Ventas Individual'),
         ),
         body: SingleChildScrollView(
             child: Column(
