@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,17 @@ class Modulo1Page extends StatefulWidget {
 class _Modulo1PageState extends State<Modulo1Page> {
   int _page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
+
+  final List<String> imgList = [
+    'ventas x mes',
+    'ventas x dia',
+    'producto comercializado',
+    'ventas x participantes',
+    'ventas 5',
+    'ventas 6'
+  ];
+  int _current = 0;
+  final CarouselController _controller = CarouselController();
 
   int touchedIndex;
   List<BarChartGroupData> rawBarGroups;
@@ -55,7 +68,7 @@ class _Modulo1PageState extends State<Modulo1Page> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Modulo 1'),
+        title: Text('Comercializacion'),
         centerTitle: true,
       ),
       body: ListView(
@@ -66,9 +79,6 @@ class _Modulo1PageState extends State<Modulo1Page> {
                   width: double.infinity,
                   height: 25,
                   decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.only(
-                    //     bottomLeft: Radius.circular(20),
-                    //     topLeft: Radius.circular(20)),
                     gradient: LinearGradient(
                         begin: Alignment.centerRight,
                         end: Alignment.centerLeft,
@@ -101,42 +111,9 @@ class _Modulo1PageState extends State<Modulo1Page> {
                       ),
                     ],
                   ))),
-          //  Container(
-          //     decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //           fit: BoxFit.cover,
-          //           colorFilter: ColorFilter.mode(
-          //               HexColor('#1E264A').withOpacity(0.7),
-          //               BlendMode.dstOut),
-          //           image: AssetImage('assets/pruebaBaneer.jpg')),
-          //       // borderRadius: BorderRadius.circular(20),
-          //       gradient: LinearGradient(
-          //           begin: Alignment.centerRight,
-          //           end: Alignment.centerLeft,
-          //           colors: <Color>[
-          //             // HexColor('#1E264A'),
-          //             // HexColor('#2E78EF'),
-          //             HexColor('#8840FF'),
-          //             HexColor('#329BFF'),
-          //             // Colors.transparent,
-          //           ]),
-          //     ),
-          //     child: Center(
-          //       child: Text('Matriz de Comercializacion',
-          //           style: TextStyle(
-          //               letterSpacing: 1.7,
-          //               color: Colors.white,
-          //               fontSize: 15,
-          //               fontWeight: FontWeight.w600)),
-          //     ))),
-
-          // _crearBtnSlider(),
-
-          // Container(
-          //   child: _validarContenido(),
-          // )
-          _mostrarTabla(),
-          _mostrarGraficas(),
+          _crearSliderTabalGrafica(),
+          // _mostrarTabla(),
+          // _mostrarGraficas(),
         ],
       ),
     );
@@ -147,7 +124,7 @@ class _Modulo1PageState extends State<Modulo1Page> {
       aspectRatio: 1.5,
       child: Container(
         child: AspectRatio(
-          aspectRatio: 1,
+          aspectRatio: 1.6,
           child: PieChart(
             PieChartData(
                 pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
@@ -175,9 +152,9 @@ class _Modulo1PageState extends State<Modulo1Page> {
   List<PieChartSectionData> showingSections() {
     return List.generate(5, (i) {
       final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 20 : 16;
-      final double radius = isTouched ? 110 : 100;
-      final double widgetSize = isTouched ? 55 : 40;
+      final double fontSize = isTouched ? 18 : 14;
+      final double radius = isTouched ? 90 : 80;
+      final double widgetSize = isTouched ? 45 : 35;
 
       switch (i) {
         case 0:
@@ -429,6 +406,18 @@ class _Modulo1PageState extends State<Modulo1Page> {
     );
   }
 
+  _mostrarTabla() {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(13),
+          color: Colors.grey[300],
+        ),
+        child: _crearDataTable(),
+      ),
+    );
+  }
+
   _crearDataTable() {
     return Container(
       decoration: BoxDecoration(
@@ -436,6 +425,11 @@ class _Modulo1PageState extends State<Modulo1Page> {
             topLeft: Radius.circular(18), topRight: Radius.circular(18)),
       ),
       child: DataTable(
+          columnSpacing: 35,
+          dataRowHeight: 40,
+          headingRowHeight: 40,
+          sortColumnIndex: 2,
+          dividerThickness: 1,
           headingTextStyle:
               TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
           headingRowColor: MaterialStateProperty.resolveWith<Color>(
@@ -453,64 +447,27 @@ class _Modulo1PageState extends State<Modulo1Page> {
             DataRow(cells: [
               DataCell(Text('Comunix')),
               DataCell(Text('2018')),
-              DataCell(Text('Individual'), showEditIcon: true),
+              DataCell(Text('Individual'), showEditIcon: false),
             ]),
             DataRow(cells: [
               DataCell(Text('Comunix a')),
               DataCell(Text('2019')),
-              DataCell(Text('Individual'), showEditIcon: true),
+              DataCell(Text('Individual'), showEditIcon: false),
             ]),
             DataRow(cells: [
               DataCell(Text('Comunix b')),
               DataCell(Text('2020')),
-              DataCell(Text('Individual'), showEditIcon: true),
+              DataCell(Text('Individual'), showEditIcon: false),
             ]),
           ]),
     );
-  }
-
-  _crearBtnSlider() {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.only(top: 5),
-        child: LiteRollingSwitch(
-          value: true,
-          textOn: 'Tabla',
-          textOff: 'Grafica',
-          colorOn: Colors.deepOrange,
-          colorOff: Colors.blueGrey,
-          iconOn: Icons.table_chart_rounded,
-          iconOff: Icons.graphic_eq_rounded,
-          onChanged: (state) {
-            estado = state;
-            print(state);
-            print('turned ${(state) ? 'tabla' : 'grafica'}');
-          },
-        ),
-      ),
-    );
-  }
-
-  _validarContenido() {
-    setState(() {
-      // (estado == false) ? _mostrarTabla() : _mostrarGraficas();
-      switch (estado) {
-        case false:
-          return _mostrarTabla();
-          break;
-        case true:
-          return _mostrarGraficas();
-          break;
-        // default:
-      }
-    });
   }
 
   _mostrarGraficas() {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(5.0),
           child: Container(
             decoration: BoxDecoration(
                 color: HexColor('#1E264A'),
@@ -542,54 +499,148 @@ class _Modulo1PageState extends State<Modulo1Page> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: HexColor('#1E264A'),
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    colors: <Color>[
-                      HexColor('#1E264A'),
-                      HexColor('#2E78EF'),
-                    ])),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8.0,
-                  ),
-                  child: Text('GRAFICA 2',
-                      style: TextStyle(
-                          letterSpacing: 1.7,
-                          color: Colors.grey[100],
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600)),
-                ),
-                Container(
-                  child: _chart2(),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(18.0),
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //         color: HexColor('#1E264A'),
+        //         borderRadius: BorderRadius.circular(20),
+        //         gradient: LinearGradient(
+        //             begin: Alignment.bottomLeft,
+        //             end: Alignment.topRight,
+        //             colors: <Color>[
+        //               HexColor('#1E264A'),
+        //               HexColor('#2E78EF'),
+        //             ])),
+        //     child: Column(
+        //       children: [
+        //         Padding(
+        //           padding: const EdgeInsets.only(
+        //             top: 8.0,
+        //           ),
+        //           child: Text('GRAFICA 2',
+        //               style: TextStyle(
+        //                   letterSpacing: 1.7,
+        //                   color: Colors.grey[100],
+        //                   fontSize: 15,
+        //                   fontWeight: FontWeight.w600)),
+        //         ),
+        //         Container(
+        //           child: _chart2(),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
 
-  _mostrarTabla() {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Colors.grey[300],
-        ),
-        child: _crearDataTable(),
+  _crearSliderTabalGrafica() {
+    final List<Widget> imageSliders = imgList
+        .map((item) => Container(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                margin: EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(10.0),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        Positioned(
+                          top: 10.0,
+                          bottom: 0.0,
+                          left: 5.0,
+                          right: 0.0,
+                          child: Container(
+                              child: Text(item,
+                                  style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600))),
+                        ),
+                        Positioned(
+                          top: 0.0,
+                          bottom: 250.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Container(child: _mostrarTabla()),
+                        ),
+                        Positioned(
+                          top: 250.0,
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Container(child: _mostrarGraficas()),
+                        ), // Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                      ],
+                    )),
+              ),
+            ))
+        .toList();
+    return Column(children: [
+      CarouselSlider(
+        items: imageSliders,
+        carouselController: _controller,
+        options: CarouselOptions(
+            // autoPlay: true,
+            // enlargeCenterPage: true,
+            aspectRatio: 16 / 20,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current = index;
+              });
+            }),
       ),
-    );
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          // Flexible(
+          //   child: RaisedButton(
+          //     onPressed: () => _controller.previousPage(),
+          //     child: Text('←'),
+          //   ),
+          // ),
+          ...Iterable<int>.generate(imgList.length).map(
+            (int pageIndex) => Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: GestureDetector(
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _current == pageIndex
+                            ? HexColor('#1E264A')
+                            : Colors.grey[300]),
+                    child: Center(
+                      child: Text("${pageIndex + 1}",
+                          style: TextStyle(
+                              color: _current == pageIndex
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 13)),
+                    ),
+                  ),
+                  onTap: () => _controller.animateToPage(pageIndex),
+                )),
+          ),
+          // Flexible(
+          //   child: RaisedButton(
+          //     onPressed: () => _controller.nextPage(),
+          //     child: Text('→'),
+          //   ),
+          // ),
+        ],
+      )
+    ]);
   }
 }
 

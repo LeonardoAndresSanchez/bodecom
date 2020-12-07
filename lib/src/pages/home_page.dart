@@ -1,16 +1,29 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:bodecom/src/animations/animations.dart';
 import 'package:bodecom/src/pages/menuModulo1.dart';
+import 'package:bodecom/src/utils/ComercializadoApi.dart';
+import 'package:bodecom/src/utils/ComercializadoFechaApi.dart';
+import 'package:bodecom/src/utils/ProyectoApi.dart';
+import 'package:bodecom/src/utils/UsuarioProyectosApi%20.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:bodecom/src/blocs/provider.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
 import 'package:lottie/lottie.dart';
+import 'package:bodecom/src/utils/ApiData.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
+  static double sumaProyectos = 0;
+  static List<ComercializadoFechaApi> comercializadoFecha = new List();
+  static List<ProyectoApi> proyectosDeUsuario = new List();
+  static List<ProyectoApi> proyectosSeleccionados = new List();
+  static List<String> listaProyectosSeleccionados = new List();
+  static bool value = false;
 }
 
 class _HomePageState extends State<HomePage> {
@@ -20,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     'Registro',
     'Indicadores',
   ];
+
   bool isSwitched = false;
   String reason = '';
   final CarouselController _controller = CarouselController();
@@ -29,6 +43,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     isShowingMainData = true;
+    obtenerProyectosUsuario("1");
   }
 
   void onPageChange(int index, CarouselPageChangedReason changeReason) {
@@ -1165,9 +1180,98 @@ class _HomePageState extends State<HomePage> {
             ),
             elevation: 0,
             backgroundColor: Colors.transparent,
-            child: dialogContent(context));
+            child: new MyDialogContent());
       },
     );
+  }
+
+  obtenerProyectosUsuario(String idusuario) async {
+    var client = http.Client();
+    try {
+      var uriResponse = await client
+          .post(ApiData.clienteProyectos, body: {'idusuario': idusuario});
+      List listaResponse = jsonDecode(uriResponse.body);
+      List<UsuarioProyectosApi> proyectosSoloID = new List();
+      proyectosSoloID = listaResponse
+          .map((mapProyecto) => new UsuarioProyectosApi.fromJson(mapProyecto))
+          .toList();
+      List<ProyectoApi> proyectos = new List();
+      for (var item in proyectosSoloID) {
+        var tmpUriResponse = await client
+            .post(ApiData.proyecto, body: {'idproyecto': item.idproyecto});
+        ProyectoApi proyecto =
+            new ProyectoApi.fromJson(jsonDecode(tmpUriResponse.body));
+        proyectos.add(proyecto);
+      }
+      HomePage.proyectosDeUsuario = proyectos;
+      client.close();
+      // obtenerComercializacionFecha();
+      obtenerComercializacion();
+    } catch (e) {
+      client.close();
+    }
+  }
+
+  obtenerComercializacion() async {
+    var client = http.Client();
+    try {
+      HomePage.sumaProyectos = 0;
+      for (var item in HomePage.proyectosDeUsuario) {
+        var tmpUriResponse = await client.post(ApiData.comercializado,
+            body: {'idproyecto': item.identificadorUnidad});
+        double suma = double.parse(jsonDecode(tmpUriResponse.body)["suma"]);
+        HomePage.sumaProyectos += suma;
+      }
+      print(HomePage.sumaProyectos);
+      client.close();
+    } catch (e) {
+      client.close();
+    }
+  }
+
+  obtenerComercializacionFecha() async {
+    var client = http.Client();
+    try {
+      List<ComercializadoFechaApi> datosComercializadoFecha = new List();
+      for (var item in HomePage.proyectosDeUsuario) {
+        var tmpUriResponse = await client.post(ApiData.comercializadoFecha,
+            body: {'idproyecto': item.identificadorUnidad});
+        List listaResponse = new List();
+        listaResponse = jsonDecode(tmpUriResponse.body);
+        client.close();
+        List<ComercializadoFechaApi> comercializadoProyecto = listaResponse
+            .map((mapProyecto) =>
+                new ComercializadoFechaApi.fromJson(mapProyecto))
+            .toList();
+        datosComercializadoFecha.addAll(comercializadoProyecto);
+      }
+      HomePage.comercializadoFecha = datosComercializadoFecha;
+      print(datosComercializadoFecha);
+    } catch (e) {
+      client.close();
+    }
+  }
+}
+
+class MyDialogContent extends StatefulWidget {
+  MyDialogContent({
+    Key key,
+    this.countries,
+  }) : super(key: key);
+
+  final List<String> countries;
+
+  @override
+  _MyDialogContentState createState() => new _MyDialogContentState();
+}
+
+class _MyDialogContentState extends State<MyDialogContent> {
+  int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    dialogContent(context);
+    super.initState();
   }
 
   dialogContent(BuildContext context) {
@@ -1176,7 +1280,7 @@ class _HomePageState extends State<HomePage> {
         Expanded(
           child: Container(
             padding: EdgeInsets.only(
-              top: 100,
+              top: 80,
               bottom: 16,
               right: 16,
               left: 16,
@@ -1203,85 +1307,10 @@ class _HomePageState extends State<HomePage> {
                   // style: kTextStyle1,
                 ),
                 Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'PROYECTOS',
-                            // style: kTextStyle1,
-                          ),
-                          Center(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  print(isSwitched);
-                                });
-                              },
-                              activeTrackColor: HexColor('#4f5885'),
-                              activeColor: HexColor('#1E264A'),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'PROYECTOS',
-                            // style: kTextStyle1,
-                          ),
-                          Center(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  print(isSwitched);
-                                });
-                              },
-                              activeTrackColor: HexColor('#4f5885'),
-                              activeColor: HexColor('#1E264A'),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'PROYECTOS',
-                            // style: kTextStyle1,
-                          ),
-                          Center(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  print(isSwitched);
-                                });
-                              },
-                              activeTrackColor: HexColor('#4f5885'),
-                              activeColor: HexColor('#1E264A'),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                        ],
-                      ),
-                    ]),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.min,
+                  children: _crearLista(),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -1347,5 +1376,50 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
+  }
+
+  List<Widget> _crearLista() {
+    List<Widget> lista = new List();
+    for (var i = 0; i < HomePage.proyectosDeUsuario.length; i++) {
+      lista.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Proyecto ' + HomePage.proyectosDeUsuario[i].identificadorUnidad,
+              // style: kTextStyle1,
+            ),
+            Center(
+              child: Switch(
+                value: HomePage.listaProyectosSeleccionados.contains(
+                    HomePage.proyectosDeUsuario[i].identificadorUnidad),
+                onChanged: (bool value) {
+                  setState(() {
+                    if (value) {
+                      HomePage.listaProyectosSeleccionados.add(
+                          HomePage.proyectosDeUsuario[i].identificadorUnidad);
+                    } else {
+                      HomePage.listaProyectosSeleccionados.remove(
+                          HomePage.proyectosDeUsuario[i].identificadorUnidad);
+                    }
+                  });
+                },
+                activeTrackColor: HexColor('#4f5885'),
+                activeColor: HexColor('#1E264A'),
+              ),
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+          ],
+        ),
+      );
+    }
+    return lista;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return dialogContent(context);
   }
 }

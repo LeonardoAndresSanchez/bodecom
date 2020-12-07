@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:bodecom/src/models/loginModel.dart';
+import 'package:bodecom/src/utils/PostLogin.dart';
+import 'package:http/http.dart' as http;
 import 'package:bodecom/src/blocs/login_bloc.dart';
+import 'package:bodecom/src/utils/ApiData.dart';
 import 'package:flutter/material.dart';
 import 'package:bodecom/src/blocs/provider.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -210,7 +217,8 @@ class LoginPage extends StatelessWidget {
           elevation: 0.0,
           color: HexColor('#1E264A'),
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+          onPressed:
+              snapshot.hasData ? () => login_con_api(bloc, context) : null,
         );
       },
     );
@@ -222,5 +230,43 @@ class LoginPage extends StatelessWidget {
     print('Email: ${bloc.email} ');
     print('password: ${bloc.password}');
     print('============');
+  }
+
+  // ignore: non_constant_identifier_names
+  login_con_api(LoginBloc bloc, BuildContext context) async {
+    var client = http.Client();
+    try {
+      var uriResponse = await client.post(ApiData.login,
+          body: {'email': bloc.email, 'password': bloc.password});
+      List listaResponseLogin = jsonDecode(uriResponse.body);
+      List<LoginModel> listaLogin = new List();
+      listaLogin = listaResponseLogin
+          .map((mapLogin) => new LoginModel.fromJson(mapLogin))
+          .toList();
+
+      if (listaLogin[0].respuestaLogin == ApiData.loginSuccess) {
+        Fluttertoast.showToast(
+            msg: "Bienvenido.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        Navigator.pushReplacementNamed(context, 'home');
+      } else {
+        // Mostrar mensaje de error.
+        Fluttertoast.showToast(
+            msg: "Error, el usuario y la contraseña no coinciden.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    } catch (e) {
+      client.close();
+    }
   }
 }
